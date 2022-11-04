@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pickle
 import glob
+import requests
 
 find_cookie = False
 cookie_files = glob.glob('cookies.pkl')
@@ -603,7 +604,7 @@ def baro1():
     # driver.get("https://www.baropharm.com/order")
     # last_tab = driver.window_handles[-1]
     # driver.switch_to.window(window_name=last_tab)
-    money = int(driver.find_element(By.XPATH,'//*[@id="popupbaromall_payment"]/div/div[1]/div[2]/div[2]/div/table/tbody/tr[2]/td/div/p/strong').text.replace('원', '').replace(',', '')) - 5999
+    money = int(driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[1]/div').text.replace(',','').replace('원','')) - int(driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[2]/div/span').text.replace('원','').replace(',','').replace('-','').replace(' ',''))- 5999
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
     #바로결제 카드 클릭
@@ -617,11 +618,12 @@ def baro2():
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
     money = int(driver.find_element(By.XPATH,'//*[@id="popupbaromall_payment"]/div/div[1]/div[2]/div[2]/div/table/tbody/tr[2]/td/div/p/strong').text.replace('원', '').replace(',', '')) - 5999
+
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
     #바로결제 카드 클릭
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/div[1]/div/div/button').click()
-    #더모아 1 선택
+    #더모아 2 선택
     driver.find_element(By.XPATH, '/html/body/div[51]/ol/li[1]/button').click()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
@@ -693,10 +695,17 @@ def barocard1():
     driver.find_element(By.ID, 'app_pwd').click()
     # 비밀번호 입력타임
 
-    #결제 완료 단계
-    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="content"]/div/ul/li/label')))
-    driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
-    driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
+    while True:
+        print('마무리 클릭')
+        try:
+            driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
+            driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
+            print('마무리 통과')
+            break
+        except:
+            print('마무리 통과못함')
+
+
 #바로팜 일반 카드2
 def barocard2():
     last_tab = driver.window_handles[-1]
@@ -767,9 +776,15 @@ def barocard2():
     #비밀번호 입력시간
 
     #확인후 넘기기
-    WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="content"]/div/ul/li/label')))
-    driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
-    driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
+    while True:
+        print('마무리 클릭')
+        try:
+            driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
+            driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
+            print('마무리 통과')
+            break
+        except:
+            print('마무리 통과못함')
 #바로팜 네이버 카드1
 def baronaver1():
     last_tab = driver.window_handles[-1]
@@ -801,7 +816,7 @@ def baronaver1():
     driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div[3]/a[1]').click()
     #비번 입력타임
     #결제 확인
-    WebDriverWait(driver,1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="content"]/div/ul/li/label')))
+    WebDriverWait(driver,100).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="content"]/div/ul/li/label')))
     driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
     driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
 #바로팜 네이버 카드2
@@ -846,6 +861,7 @@ def baronaver2():
         except:
             print('결제완료 통과못함')
 
+    WebDriverWait(driver,100).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="content"]/div/ul/li/label')))
     driver.find_element(By.XPATH, '//*[@id="content"]/div/ul/li/label').click()
     driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span/a').click()
 #바로팜 카카오 카드
@@ -1020,12 +1036,17 @@ def barossg():
     driver.find_element(By.XPATH, '//*[@id="content"]/div/div[2]/ul/li[1]/label').click()
     driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span[2]/a').click()
 
-#레아팜 카드1
+#레아팜 카드1 (request문으로 업글할것)
 def Reapharm1():
     driver.find_element(By.ID, 'txtid').send_keys('hm2021')
     driver.find_element(By.ID, 'txtPwd').send_keys('gml!2021', Keys.RETURN)
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located('//*[@id="usrWosTop1_tdVenNm"]'))
-    driver.find_element(By.XPATH, '//*[@id="usrWosTop1_TblMenu"]/tbody/tr/td[8]/a').click()
+    while True:
+        try:
+            driver.find_element(By.XPATH, '//*[@id="usrWosTop1_TblMenu"]/tbody/tr/td[8]/a').click()
+            print('카드결제창 진입')
+            break
+        except:
+            pass
     driver.find_element(By.ID, 'card_no1').send_keys('9410')
     driver.find_element(By.ID, 'card_no2').send_keys('6186')
     driver.find_element(By.ID, 'card_no3').send_keys('4696')
@@ -1035,8 +1056,15 @@ def Reapharm1():
     driver.find_element(By.ID, 'EP_product_amt').send_keys('6109')
     driver.find_element(By.XPATH, '//*[@id="selRate"]/option[4]').click()
     driver.find_element(By.ID, 'btnCreadit').click()
+    print('카드1 결제 끗')
 #레아팜 카드2
-    driver.find_element(By.XPATH, '//*[@id="usrWosTop1_TblMenu"]/tbody/tr/td[8]/a').click()
+    while True:
+        try:
+            driver.find_element(By.XPATH, '//*[@id="usrWosTop1_TblMenu"]/tbody/tr/td[8]/a').click()
+            print('카드결제창 진입')
+            break
+        except:
+            pass
     driver.find_element(By.ID, 'card_no1').send_keys('9410')
     driver.find_element(By.ID, 'card_no2').send_keys('6186')
     driver.find_element(By.ID, 'card_no3').send_keys('4704')
@@ -1046,6 +1074,7 @@ def Reapharm1():
     driver.find_element(By.ID, 'EP_product_amt').send_keys('6109')
     driver.find_element(By.XPATH, '//*[@id="selRate"]/option[4]').click()
     driver.find_element(By.ID, 'btnCreadit').click()
+    print('카드1 결제 끗')
 def hmp_simpay1():
     #주문 경고창
     last_tab = driver.window_handles[-1]
@@ -1235,10 +1264,20 @@ def hmp_card2():
 
     #결제완료
 
-def pharmpay():
-    driver.get("http://my.pharmpay.co.kr/pur/login/login.html")
-    driver.find_element(By.ID, "my_pur_taxno").send_keys("5290801603")
-    driver.find_element(By.ID, "my_pur_pw").send_keys("01603", Keys.RETURN)
+# def pharmpay():
+#     driver.get("http://my.pharmpay.co.kr/pur/login/login.html")
+#     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "my_pur_taxno")))
+#     driver.find_element(By.ID, "my_pur_taxno").send_keys("5290801603")
+#     driver.find_element(By.ID, "my_pur_pw").send_keys("01603", Keys.RETURN)
+#
+#     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[2]/div/button[2]').click()
+#     driver.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[3]/td[2]/input').send_keys('5999')
+#
+#     driver.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[5]/td[2]/input[1]').send_keys('9410')
+#     driver.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[5]/td[2]/input[2]').send_keys('6186')
+#     driver.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[5]/td[2]/input[3]').send_keys('4696')
+#     driver.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[5]/td[2]/input[4]').send_keys('6220')
+
 
 def dotest():
     diabex()
