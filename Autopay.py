@@ -993,7 +993,7 @@ def ph_pay(com, card, money):
 
     while True:
         try:
-            WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[5]/div/ul/li[3]/a')))
+            driver.implicitly_wait(3)
             driver.find_element(By.XPATH, '/html/body/div[5]/div/ul/li[3]/a').click()
             driver.find_element(By.XPATH, '/html/body/div[5]/div/ul/li[3]/ul/li[1]/a').click()
             print('로그인후 메뉴 누르기 성공')
@@ -1051,8 +1051,9 @@ def ph_pay(com, card, money):
         print('결제 실패')
         driver.switch_to.alert.accept()
         driver.close()
-        pharm_pay(com,card,money)
+        ph_pay(com,card,money)
     else:
+        driver.implicitly_wait(3)
         driver.switch_to.alert.accept()
         driver.implicitly_wait(3)
         print('결제 완료')
