@@ -208,11 +208,12 @@ def gocart():
     while True:
         try:
             driver.find_element(By.CLASS_NAME, "btn_cartlist").click()
+            break
         except:
-            driver.find_element(By.CLASS_NAME, "btn_cart").click()
-        try:
-            WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="content"]/div[1]/h2')))
             pass
+        try:
+            driver.find_element(By.CLASS_NAME, "btn_cart").click()
+            break
         except:
             pass
 # 다이아벡스 외의 담긴것 확인 및 제외 (금액이 12000원 이하, 6000원 이상인지 체크하는것으로 메커니즘 변경)
@@ -413,14 +414,14 @@ def pharmpay(ppid,pppw):
             print('신용카드 버튼 누르기 실패')
     ##지오팜 카드1
     #지오팜
-    while True:
-        try:
-            print('신용카드 버튼 누르기')
-            driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[2]/div/button[2]').click()
-            print('신용카드 버튼 누름')
-            break
-        except:
-            print('신용카드 버튼 누르기 실패')
+    # while True:
+    #     try:
+    #         print('거래처 옵션 버튼 누르기')
+    #         driver.find_element(By.NAME,'2298116607').click()
+    #         print('거래처 옵션 버튼 누름')
+    #         break
+    #     except:
+    #         print('신용카드 버튼 누르기 실패')
 
     driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[2]/td[2]/select/option[3]').click()
     driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[3]/td[2]/input').send_keys('5999')
@@ -436,7 +437,17 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
+    while True:
+        try:
+            print('거래처 옵션 버튼 누르기')
+            driver.find_element(By.NAME,'2298116607').click()
+            print('거래처 옵션 버튼 누름')
+            break
+        except:
+            print('신용카드 버튼 누르기 실패')
 
+    #결제하기
+    driver.find_element(By.CLASS_NAME, 'btn btn-primary btn_payment btn_now_pay').click()
     ##지오팜 카드2
     while True:
         try:
@@ -446,6 +457,16 @@ def pharmpay(ppid,pppw):
             break
         except:
             print('신용카드 버튼 누르기 실패')
+    ##지오팜 카드2
+    #지오팜
+    while True:
+        try:
+            print('거래처 옵션 누르기')
+            driver.find_element(By.NAME,'2298116607').click()
+            print('거래처 옵션 누름')
+            break
+        except:
+            print('거래처 옵션 누르기 실패')
     driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[2]/td[2]/select/option[3]').click()
     driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[3]/td[2]/input').send_keys('5999')
     #카드1
@@ -460,12 +481,21 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
-
+    while True:
+        try:
+            print('거래처 옵션 누르기')
+            driver.find_element(By.NAME,'2298116607').click()
+            print('거래처 옵션 누름')
+            break
+        except:
+            print('거래처 옵션 누르기 실패')
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[4]/td[2]/button').click()
     #훼밀리팜
     while True:
         try:
             print('신용카드 버튼 누르기')
-            driver.find_element(By.XPATH,'//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[2]/div/button[2]').click()
+            driver.find_element(By.NAME,'//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[2]/div/button[2]').click()
             print('신용카드 버튼 누름')
             break
         except:
@@ -493,7 +523,8 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
-
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[4]/td[2]/button').click()
 
     ##훼밀리 카드2
     while True:
@@ -527,7 +558,8 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
-
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[4]/td[2]/button').click()
     #레아팜 카드1
     while True:
         try:
@@ -560,7 +592,8 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
-
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[4]/td[2]/button').click()
     #레아팜 카드2
     while True:
         try:
@@ -593,6 +626,8 @@ def pharmpay(ppid,pppw):
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[6]/td[4]/select/option[2]').click()
     #약관동의
     driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[1]/td[3]/button[1]/i').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="right_content"]/div[1]/table/tbody/tr[4]/td[2]/button').click()
     #pharmpay('5290801603','01603')
 
 # 레아팜 결제
@@ -1038,6 +1073,9 @@ def barossg():
 
 #레아팜 카드1 (request문으로 업글할것)
 def Reapharm1():
+    requests.get('http://bmpharm.co.kr/Login/incLogin.aspx?id=hm2021&pwd=gml!2021&s=0')
+
+
     driver.find_element(By.ID, 'txtid').send_keys('hm2021')
     driver.find_element(By.ID, 'txtPwd').send_keys('gml!2021', Keys.RETURN)
     while True:
@@ -1046,6 +1084,7 @@ def Reapharm1():
             print('카드결제창 진입')
             break
         except:
+            print('카드결제창 진입실패')
             pass
     driver.find_element(By.ID, 'card_no1').send_keys('9410')
     driver.find_element(By.ID, 'card_no2').send_keys('6186')
@@ -1074,7 +1113,9 @@ def Reapharm1():
     driver.find_element(By.ID, 'EP_product_amt').send_keys('6109')
     driver.find_element(By.XPATH, '//*[@id="selRate"]/option[4]').click()
     driver.find_element(By.ID, 'btnCreadit').click()
-    print('카드1 결제 끗')
+    print('카드2 결제 끗')
+
+
 def hmp_simpay1():
     #주문 경고창
     last_tab = driver.window_handles[-1]
