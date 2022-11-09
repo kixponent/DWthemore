@@ -27,26 +27,26 @@ def wait_for_new_window(driver, timeout=10):
     WebDriverWait(driver, timeout).until(
         lambda driver: len(handles_before) != len(driver.window_handles))
 
-# while(not login_with_cookie):
-#     # 쿠키 정보를 이용해 로그인
-#     if find_cookie:
-#         # driver = webdriver.Chrome("./chromedriver")
-#         cookies = pickle.load(open("cookies.pkl", "rb"))
-#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
-#         for cookie in cookies:
-#             driver.add_cookie(cookie)
-#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
-#         login_with_cookie = True
-#     else:
-#         driver = webdriver.Chrome("./chromedriver")
-#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
-#         while(not find_cookie):
-#             cookies = driver.get_cookies()
-#             if len(cookies)>0:
-#                 find_cookie = True
-#         pickle.dump(cookies , open("cookies.pkl","wb"))
-#         driver.close()
-#         driver.quit()
+while(not login_with_cookie):
+    # 쿠키 정보를 이용해 로그인
+    if find_cookie:
+        # driver = webdriver.Chrome("./chromedriver")
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        driver.get("https://www.shop.co.kr/front/theshop/main/main")
+        for cookie in cookies:
+            driver.add_cookie(cookie)
+        driver.get("https://www.shop.co.kr/front/theshop/main/main")
+        login_with_cookie = True
+    else:
+        driver = webdriver.Chrome("./chromedriver")
+        driver.get("https://www.shop.co.kr/front/theshop/main/main")
+        while(not find_cookie):
+            cookies = driver.get_cookies()
+            if len(cookies)>0:
+                find_cookie = True
+        pickle.dump(cookies , open("cookies.pkl","wb"))
+        driver.close()
+        driver.quit()
 ## 대웅 메인화면 & 로그인 ##
 def login(dwid, dwpw):
     #hm2021, gmlakd!2021
@@ -193,16 +193,25 @@ def diabex1000x2():
     #다이아벡스 1000mg 30정 x 2
     print('1000 2  하는중')
     WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.ID, "search_li_64385")))
+    driver.implicitly_wait(1)
     driver.find_element(By.ID, "search_li_64385").click()
-
+    driver.implicitly_wait(1)
     driver.find_element(By.ID, "button_plus").click()
+    driver.implicitly_wait(1)
     driver.find_element(By.ID, "btn_cartInsert").click()
-    while True:
+    altext = str()
+    while True :
         try:
-            print(driver.switch_to.alert.text)
-            driver.switch_to.alert.accept()
-            if '등록' in driver.switch_to.alert.text:
+            WebDriverWait(driver,5).until(EC.alert_is_present())
+            altext = driver.switch_to.alert.text
+            if '등록' in str(altext):
+                driver.switch_to.alert.accept()
+                print(altext,' 탈출')
                 break
+            else:
+                driver.switch_to.alert.accept()
+                print(altext)
+                pass
         except:
             pass
 
@@ -213,6 +222,11 @@ def gocart():
     print('장바구니 하는중')
     driver.get("https://www.shop.co.kr/front/theshop/cart/cartList")
     driver.implicitly_wait(3)
+    print(driver.find_element(By.XPATH, '//*[@id="new-cart-list-view-none"]/p').text)
+    if '없습니다' in str(driver.find_element(By.XPATH, '//*[@id="new-cart-list-view-none"]/p').text):
+        print('장바구니가 비었습니다.')
+        return
+
     # tryno = 0
     # while tryno < 10:
     #     tryno += 1
@@ -337,9 +351,11 @@ def normore1():
             break
         except:
             pass
+    #비밀번호 입력
 
-    # 간편결제 비밀번호 클릭
-    driver.find_element(By.ID, 'app_pwd').click()
+
+    # # 간편결제 비밀번호 클릭
+    # driver.find_element(By.ID, 'app_pwd').click()
 
     # driver.find_element(By.XPATH, '//*[@id="fanView"]/div[2]/ul/li[2]/a').click()
     # driver.find_element(By.XPATH, '//*[@id="otherView"]/div[3]/ul/li[2]/a/span').click()
@@ -381,6 +397,105 @@ def normore2():
     driver.find_element(By.ID,'payMethod_card').click()
     driver.find_element(By.XPATH, '//*[@id="paymentCard"]/option[5]').click()
     driver.find_element(By.XPATH,'//*[@id="payButtonDiv"]/div/button[1]').click()
+
+def payco1():
+    driver.find_element(By.ID, 'payMethod_payco').click()
+    driver.find_element(By.XPATH,'//*[@id="payButtonDiv"]/div/button[1]').click()
+    # while True:
+    #     # print('프레임 전환')
+    #     # driver.switch_to.frame('certframe')
+    #     try:
+    #         WebDriverWait(driver, 1).until(
+    #             EC.element_to_be_clickable((By.XPATH, '//*[@id="pgCardList_nextBtn"]/span')))
+    #         print('새창통과')
+    #         break
+    #     except:
+    #         print('새창통과못함')
+    #
+    # driver.find_element(By.XPATH, '//*[@id="contents"]/div[1]/ul/li[1]/label').click()
+    # driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span[2]/a').click()
+    while True:
+        # print('새창 전환')
+        # last_tab = driver.window_handles[-1]
+        # driver.switch_to.window(window_name=last_tab)
+        print('프레임 전환')
+        driver.switch_to.frame('kiccLayerTarget')
+        driver.switch_to.frame('certframe')
+        try:
+            WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="pgCardList_nextBtn"]/span')))
+            print('새창통과')
+            break
+        except:
+            print('새창통과못함')
+
+    # 카드선택
+    driver.find_element(By.XPATH, '//*[@id="pgCardList_nextBtn"]/span').click()
+    driver.find_element(By.XPATH, '//*[@id="pgCardList_nextBtn"]/span').click()
+    # 두번 가야 카드1
+    driver.find_element(By.XPATH, '//*[@id="btnPayment"]').click()
+    # 비밀번호 타임
+
+    # 완료
+    while True:
+        print('새창 완료 전환')
+        last_tab = driver.window_handles[-1]
+        driver.switch_to.window(window_name=last_tab)
+        try:
+            driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/ul/li[1]/label').click()
+            driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span[2]/a').click()
+            print('완료 통과')
+            break
+        except:
+            print('완료통과못함')
+
+def payco2():
+    driver.find_element(By.ID, 'payMethod_payco').click()
+    driver.find_element(By.XPATH,'//*[@id="payButtonDiv"]/div/button[1]').click()
+
+    while True:
+        print('새창 전환')
+        last_tab = driver.window_handles[-1]
+        driver.switch_to.window(window_name=last_tab)
+        try:
+            WebDriverWait(driver, 1).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="contents"]/div[1]/ul/li[1]/label')))
+            print('새창통과')
+            break
+        except:
+            print('새창통과못함')
+
+    driver.find_element(By.XPATH, '//*[@id="contents"]/div[1]/ul/li[1]/label').click()
+    driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span[2]/a').click()
+    while True:
+        print('새창 전환')
+        last_tab = driver.window_handles[-1]
+        driver.switch_to.window(window_name=last_tab)
+        try:
+            WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="pgCardList_nextBtn"]/span')))
+            print('새창통과')
+            break
+        except:
+            print('새창통과못함')
+
+    # 카드선택
+    driver.find_element(By.XPATH, '//*[@id="pgCardList_nextBtn"]/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="pgCardList_nextBtn"]/span').click()
+    # 두번 가야 카드1
+    driver.find_element(By.XPATH, '//*[@id="btnPayment"]').click()
+    # 비밀번호 타임
+
+    # 완료
+    while True:
+        print('새창 완료 전환')
+        last_tab = driver.window_handles[-1]
+        driver.switch_to.window(window_name=last_tab)
+        try:
+            driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/ul/li[1]/label').click()
+            driver.find_element(By.XPATH, '//*[@id="footer"]/div/div/div/span[2]/a').click()
+            print('완료 통과')
+            break
+        except:
+            print('완료통과못함')
 
 def initial():
     back()
@@ -436,9 +551,14 @@ def test(dose,unit,card):
         back()
     elif card == 'normore':
         normore1()
+    elif card == 'payco1':
+        payco1()
+    elif card == 'payco2':
+        payco2()
     else:
         print('카드입력오류')
     return('완료')
     #test(250 500 1000,30 100,themore12 normore)
     #test(1000,30,'themore1')
     #test(1000,30,'normore')
+    #test(1000,30,'payco1')
