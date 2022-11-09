@@ -27,26 +27,26 @@ def wait_for_new_window(driver, timeout=10):
     WebDriverWait(driver, timeout).until(
         lambda driver: len(handles_before) != len(driver.window_handles))
 
-while(not login_with_cookie):
-    # 쿠키 정보를 이용해 로그인
-    if find_cookie:
-        # driver = webdriver.Chrome("./chromedriver")
-        cookies = pickle.load(open("cookies.pkl", "rb"))
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        for cookie in cookies:
-            driver.add_cookie(cookie)
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        login_with_cookie = True
-    else:
-        driver = webdriver.Chrome("./chromedriver")
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        while(not find_cookie):
-            cookies = driver.get_cookies()
-            if len(cookies)>0:
-                find_cookie = True
-        pickle.dump(cookies , open("cookies.pkl","wb"))
-        driver.close()
-        driver.quit()
+# while(not login_with_cookie):
+#     # 쿠키 정보를 이용해 로그인
+#     if find_cookie:
+#         # driver = webdriver.Chrome("./chromedriver")
+#         cookies = pickle.load(open("cookies.pkl", "rb"))
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         for cookie in cookies:
+#             driver.add_cookie(cookie)
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         login_with_cookie = True
+#     else:
+#         driver = webdriver.Chrome("./chromedriver")
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         while(not find_cookie):
+#             cookies = driver.get_cookies()
+#             if len(cookies)>0:
+#                 find_cookie = True
+#         pickle.dump(cookies , open("cookies.pkl","wb"))
+#         driver.close()
+#         driver.quit()
 ## 대웅 메인화면 & 로그인 ##
 def login(dwid, dwpw):
     #hm2021, gmlakd!2021
@@ -390,6 +390,7 @@ def test(dose,unit,card):
             diabex()
             break
         except:
+            print('오류발생')
             pass
     while True:
         try:
@@ -446,3 +447,4 @@ def test(dose,unit,card):
         print('카드입력오류')
     return('완료')
     #test(250 500 1000,30 100,themore12 normore)
+    #test(1000,30,'themore1')

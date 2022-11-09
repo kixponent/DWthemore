@@ -27,26 +27,26 @@ def wait_for_new_window(driver, timeout=10):
     WebDriverWait(driver, timeout).until(
         lambda driver: len(handles_before) != len(driver.window_handles))
 
-while(not login_with_cookie):
-    # 쿠키 정보를 이용해 로그인
-    if find_cookie:
-        # driver = webdriver.Chrome("./chromedriver")
-        cookies = pickle.load(open("cookies.pkl", "rb"))
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        for cookie in cookies:
-            driver.add_cookie(cookie)
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        login_with_cookie = True
-    else:
-        driver = webdriver.Chrome("./chromedriver")
-        driver.get("https://www.shop.co.kr/front/theshop/main/main")
-        while(not find_cookie):
-            cookies = driver.get_cookies()
-            if len(cookies)>0:
-                find_cookie = True
-        pickle.dump(cookies , open("cookies.pkl","wb"))
-        driver.close()
-        driver.quit()
+# while(not login_with_cookie):
+#     # 쿠키 정보를 이용해 로그인
+#     if find_cookie:
+#         # driver = webdriver.Chrome("./chromedriver")
+#         cookies = pickle.load(open("cookies.pkl", "rb"))
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         for cookie in cookies:
+#             driver.add_cookie(cookie)
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         login_with_cookie = True
+#     else:
+#         driver = webdriver.Chrome("./chromedriver")
+#         driver.get("https://www.shop.co.kr/front/theshop/main/main")
+#         while(not find_cookie):
+#             cookies = driver.get_cookies()
+#             if len(cookies)>0:
+#                 find_cookie = True
+#         pickle.dump(cookies , open("cookies.pkl","wb"))
+#         driver.close()
+#         driver.quit()
 
 def hmp_simpay1():
     #주문 경고창
@@ -72,7 +72,7 @@ def hmp_simpay1():
     driver.find_element(By.XPATH,'//*[@id="210706498010220B|210706498010180B|CCLG"]').click()
     driver.find_element(By.XPATH, '//*[@id="smartInstallment"]/option[2]').click()
     driver.find_element(By.XPATH, '//*[@id="imgPaymentPay"]').click()
-
+    driver.implicitly_wait(3)
     driver.switch_to.alert.accept()
 def hmp_simpay2():
     #주문 경고창
@@ -98,7 +98,7 @@ def hmp_simpay2():
     driver.find_element(By.XPATH,'//*[@id="21070849875857F9|21070849875856F9|CCLG"]').click()
     driver.find_element(By.XPATH, '//*[@id="smartInstallment"]/option[2]').click()
     driver.find_element(By.XPATH, '//*[@id="imgPaymentPay"]').click()
-
+    driver.implicitly_wait(3)
     driver.switch_to.alert.accept()
 def hmp_card1():
     last_tab = driver.window_handles[-1]
@@ -151,7 +151,7 @@ def hmp_card1():
         except:
             print('페이결제 이후 못함')
 
-    #카드선택
+    #카드선택 - 2번카드 선택되는것 수정
     while True:
         print('카드선택')
         try:
