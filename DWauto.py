@@ -76,15 +76,19 @@ def diabex():
     while True:
         try:
             driver.find_element(By.ID,'header_searchVal').send_keys("다이아벡스",Keys.RETURN)
+            print('다이아벡스 입력')
+            WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID, 'h2_search_title')))
+
             break
         except:
             try:
+                print('다이아벡스 입력 2차시도')
                 driver.find_element(By.XPATH, '//*[@id="autoCompleteText"]').clear()
                 driver.find_element(By.XPATH, '//*[@id="autoCompleteText"]').send_keys('다이아벡스', Keys.RETURN)
                 break
             except:
                 pass
-    WebDriverWait(driver,timeout=5).until(EC.presence_of_element_located((By.ID,'h2_search_title')))
+
 #driver.find_element(By.ID,'autoCompleteText').send_keys("다이아벡스",Keys.RETURN)
 def diabex250():
     print('250 하는중')
@@ -121,6 +125,7 @@ def diabex250():
     except:
         pass
 def diabex500():
+    print('500 하는중')
     #다이아벡스 500mg 100정
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64258")))
     driver.find_element(By.ID, "search_li_64258").click()
@@ -140,6 +145,7 @@ def diabex500():
 
 def diabex500x3():
     #다이아벡스 500mg 30정 x 3
+    print('500 3 하는중')
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64375")))
     driver.find_element(By.ID, "search_li_64375").click()
     driver.find_element(By.ID, "button_plus").click()
@@ -160,6 +166,7 @@ def diabex500x3():
 
 def diabex1000():
     #다이아벡스 1000mg 100정
+    print('1000 하는중')
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64546")))
     driver.find_element(By.ID, "search_li_64546").click()
     driver.find_element(By.ID, "btn_cartInsert").click()
@@ -184,38 +191,41 @@ def diabex1000():
         pass
 def diabex1000x2():
     #다이아벡스 1000mg 30정 x 2
-    WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64385")))
+    print('1000 2  하는중')
+    WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.ID, "search_li_64385")))
     driver.find_element(By.ID, "search_li_64385").click()
+
     driver.find_element(By.ID, "button_plus").click()
     driver.find_element(By.ID, "btn_cartInsert").click()
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
+    while True:
+        try:
+            print(driver.switch_to.alert.text)
+            driver.switch_to.alert.accept()
+            if '등록' in driver.switch_to.alert.text:
+                break
+        except:
+            pass
+
 
 ## 장바구니 결제 ##
 # 장바구니로 이동
 def gocart():
     print('장바구니 하는중')
-    while True:
-        try:
-            driver.find_element(By.CLASS_NAME, "btn_cartlist").click()
-            break
-        except:
-            pass
-        try:
-            driver.find_element(By.CLASS_NAME, "btn_cart").click()
-            break
-        except:
-            pass
+    driver.get("https://www.shop.co.kr/front/theshop/cart/cartList")
+    driver.implicitly_wait(3)
+    # tryno = 0
+    # while tryno < 10:
+    #     tryno += 1
+    #     try:
+    #         driver.find_element(By.CLASS_NAME, "btn_cartlist").click()
+    #         break
+    #     except:
+    #         pass
+    #     try:
+    #         driver.find_element(By.CLASS_NAME, "btn_cart").click()
+    #         break
+    #     except:
+    #         pass
 # 다이아벡스 외의 담긴것 확인 및 제외 (금액이 12000원 이하, 6000원 이상인지 체크하는것으로 메커니즘 변경)
     total = int(driver.find_element(By.ID, "totCartOrderSum").text.replace(",",""))
     money = int(driver.find_element(By.ID, "btn-deposit-chk").text.replace(",", ""))
@@ -385,49 +395,32 @@ def back():
     pickle.dump(cookies, open("cookies.pkl", "wb"))
 
 def test(dose,unit,card):
-    while True:
-        try:
-            diabex()
-            break
-        except:
-            print('오류발생')
-            pass
-    while True:
-        try:
-            if dose == 250:
-                diabex250()
-
-            elif dose == 500:
-                if unit == 30:
-                    diabex500x3()
-                    break
-                elif unit == 100:
-                    diabex500()
-                    break
-                else:
-                    print('다이아벡스 500 단위 오류')
-                    break
-            elif dose == 1000:
-                if unit == 30:
-                    diabex1000x2()
-                    break
-                elif unit == 100:
-                    diabex1000()
-                    break
-                else:
-                    print('다이아벡스 1000 단위 오류')
-                    break
+    diabex()
+    try:
+        if dose == 250:
+            diabex250()
+        elif dose == 500:
+            if unit == 30:
+                diabex500x3()
+            elif unit == 100:
+                diabex500()
             else:
-                print('다이아벡스 용량 오류')
-                break
-        except:
-            pass
-    while True:
-        try:
-            gocart()
-            break
-        except:
-            pass
+                print('다이아벡스 500 단위 오류')
+        elif dose == 1000:
+            if unit == 30:
+                diabex1000x2()
+            elif unit == 100:
+                diabex1000()
+            else:
+                print('다이아벡스 1000 단위 오류')
+        else:
+            print('다이아벡스 용량 오류')
+    except:
+        print('다이아벡스 담기 오류 발생')
+
+    gocart()
+    print('고카트 함수 성공')
+
     while True:
         try:
             themoreready()
@@ -448,3 +441,4 @@ def test(dose,unit,card):
     return('완료')
     #test(250 500 1000,30 100,themore12 normore)
     #test(1000,30,'themore1')
+    #test(1000,30,'normore')
