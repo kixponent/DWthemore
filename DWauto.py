@@ -137,20 +137,10 @@ def diabex500():
     print('500 하는중')
     #다이아벡스 500mg 100정
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64258")))
-    driver.find_element(By.ID, "search_li_64258").click()
-    driver.find_element(By.ID, "btn_cartInsert").click()
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
+    print('500 100정 담기 시도')
+    tryuntil("search_li_64258",'7,000')
+    alertexit()
+    print('500 100정 담기 성공')
 
 def diabex500x3():
     #다이아벡스 500mg 30정 x 3
@@ -160,44 +150,16 @@ def diabex500x3():
     driver.find_element(By.ID, "button_plus").click()
     driver.find_element(By.ID, "button_plus").click()
     driver.find_element(By.ID, "btn_cartInsert").click()
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
+    alertexit()
+
 
 def diabex1000():
     #다이아벡스 1000mg 100정
     print('1000 하는중')
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64546")))
-    driver.find_element(By.ID, "search_li_64546").click()
-    driver.find_element(By.ID, "btn_cartInsert").click()
-    while True:
-        try:
-            driver.switch_to.alert.accept()
-            print('다이아벡스 1000 경고창 1')
-            break
-        except:
-            pass
-    while True:
-        try:
-            driver.switch_to.alert.accept()
-            print('다이아벡스 1000 경고창 2')
-            break
-        except:
-            pass
-    try:
-        driver.switch_to.alert.accept()
-        print('다이아벡스 1000 경고창 3')
-    except:
-        pass
+    tryuntil("search_li_64546",'11,200')
+    alertexit()
+
 def diabex1000x2():
     #다이아벡스 1000mg 30정 x 2
     print('1000 2  하는중')
