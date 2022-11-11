@@ -227,7 +227,10 @@ def kd_pay(card,money):
     response_kd_payment = requests.post('https://kdshop.co.kr/mypage/deposit_charge_req.do',  data= data_kd_pay, cookies= response_kd_paypage.cookies)
 ##팜페이 - 작동됨
 def ph_pay(com, card, money):
-    driver = webdriver.Chrome("./chromedriver")
+    options = webdriver.ChromeOptions()
+    # 창 숨기는 옵션 추가
+    options.add_argument("headless")
+    driver = webdriver.Chrome("./chromedriver", options=options)
     driver.get('http://my.pharmpay.co.kr/')
     driver.find_element(By.ID, 'my_pur_taxno').send_keys('5290801603')
     driver.find_element(By.ID, 'my_pur_pw').send_keys('01603',Keys.RETURN)
