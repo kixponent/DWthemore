@@ -27,6 +27,34 @@ def wait_for_new_window(driver, timeout=10):
     WebDriverWait(driver, timeout).until(
         lambda driver: len(handles_before) != len(driver.window_handles))
 
+def alertexit():
+    altext = str()
+    while True :
+        try:
+            print('알림창 대기중')
+            WebDriverWait(driver,5).until(EC.alert_is_present())
+            altext = driver.switch_to.alert.text
+            if '등록' in str(altext):
+                driver.switch_to.alert.accept()
+                print(altext,' 탈출')
+                break
+            else:
+                driver.switch_to.alert.accept()
+                print(altext)
+                pass
+        except:
+            driver.find_element(By.ID, "btn_cartInsert").click()
+
+def tryuntil(dotings,condition):
+    while True:
+        driver.find_element(By.ID, dotings).click()
+        try:
+            if driver.find_element(By.XPATH, '//*[@id="div_goodsDetail"]/div[1]/dl[2]/dd/strong/span').text == condition:
+                driver.implicitly_wait(1)
+                driver.find_element(By.ID, "btn_cartInsert").click()
+                break
+        except:
+            pass
 while(not login_with_cookie):
     # 쿠키 정보를 이용해 로그인
     if find_cookie:
@@ -95,35 +123,16 @@ def diabex250():
     WebDriverWait(driver, timeout=5).until(EC.presence_of_element_located((By.ID,"search_li_64540")))
     #다이아벡스 250mg 100정 + 30정
     #다이아벡스 250mg 100정
-    driver.find_element(By.ID, "search_li_64540").click()
-    driver.find_element(By.ID, "btn_cartInsert").click()
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
+    print('250 100정 담기 시도')
+    tryuntil("search_li_64540",'4,900')
+    alertexit()
+    print('250 100정 담기 성공')
+
     #다이아벡스 250mg 30정
-    driver.find_element(By.ID, "search_li_64264").click()
-    driver.find_element(By.ID, "btn_cartInsert").click()
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
-    try:
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-        driver.switch_to.alert.accept()
-    except:
-        pass
+    print('250 30정 담기 시도')
+    tryuntil("search_li_64264",'1,470')
+    alertexit()
+    print('250 30정 담기 성공')
 def diabex500():
     print('500 하는중')
     #다이아벡스 500mg 100정
@@ -199,21 +208,7 @@ def diabex1000x2():
     driver.find_element(By.ID, "button_plus").click()
     driver.implicitly_wait(1)
     driver.find_element(By.ID, "btn_cartInsert").click()
-    altext = str()
-    while True :
-        try:
-            WebDriverWait(driver,5).until(EC.alert_is_present())
-            altext = driver.switch_to.alert.text
-            if '등록' in str(altext):
-                driver.switch_to.alert.accept()
-                print(altext,' 탈출')
-                break
-            else:
-                driver.switch_to.alert.accept()
-                print(altext)
-                pass
-        except:
-            pass
+    alertexit()
 
 
 ## 장바구니 결제 ##
@@ -561,4 +556,4 @@ def test(dose,unit,card):
     #test(250 500 1000,30 100,themore12 normore)
     #test(1000,30,'themore1')
     #test(1000,30,'normore')
-    #test(1000,30,'payco1')
+    #test(250,30,'themore1')
