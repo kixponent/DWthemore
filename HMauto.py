@@ -72,7 +72,7 @@ def hmp_simpay1():
     driver.find_element(By.XPATH,'//*[@id="210706498010220B|210706498010180B|CCLG"]').click()
     driver.find_element(By.XPATH, '//*[@id="smartInstallment"]/option[2]').click()
     driver.find_element(By.XPATH, '//*[@id="imgPaymentPay"]').click()
-    driver.implicitly_wait(3)
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
 def hmp_simpay2():
     #주문 경고창
@@ -98,7 +98,7 @@ def hmp_simpay2():
     driver.find_element(By.XPATH,'//*[@id="21070849875857F9|21070849875856F9|CCLG"]').click()
     driver.find_element(By.XPATH, '//*[@id="smartInstallment"]/option[2]').click()
     driver.find_element(By.XPATH, '//*[@id="imgPaymentPay"]').click()
-    driver.implicitly_wait(3)
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
 def hmp_card1():
     last_tab = driver.window_handles[-1]
