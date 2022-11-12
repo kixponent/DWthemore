@@ -58,25 +58,31 @@ def baro1():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
     #바로결제 카드 클릭
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/div[1]/div/div/button').click()
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[1]/div/label/div[2]/div[1]/div/div').click()
     #더모아 1 선택
     driver.find_element(By.XPATH, '/html/body/div[51]/ol/li[2]/button').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #결제버튼 누르기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인 버튼
+    driver.implicitly_wait(3)
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
 #바로팜 간편 결제2
 def baro2():
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
     money = int(driver.find_element(By.XPATH,'//*[@id="popupbaromall_payment"]/div/div[1]/div[2]/div[2]/div/table/tbody/tr[2]/td/div/p/strong').text.replace('원', '').replace(',', '')) - 5999
-
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
     #바로결제 카드 클릭
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/div[1]/div/div/button').click()
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[1]/div/label/div[2]/div[1]/div/div').click()
     #더모아 2 선택
     driver.find_element(By.XPATH, '/html/body/div[51]/ol/li[1]/button').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #결제버튼 누르기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인 버튼
+    driver.implicitly_wait(3)
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+
 #바로팜 일반 카드1
 def barocard1():
     last_tab = driver.window_handles[-1]
@@ -86,8 +92,12 @@ def barocard1():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    #일반신용카드
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[6]/div/label/span[1]').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     print('통과')
     #대기
@@ -154,7 +164,6 @@ def barocard1():
             break
         except:
             print('마무리 통과못함')
-
 #바로팜 일반 카드2
 def barocard2():
     last_tab = driver.window_handles[-1]
@@ -164,8 +173,11 @@ def barocard2():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #일반신용카드
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[6]/div/label/span[1]').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     print('통과')
     #대기
@@ -243,9 +255,15 @@ def baronaver1():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[2]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[2]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+    #네이버페이 클릭
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[4]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     while True:
         print('새창 전환')
@@ -279,9 +297,15 @@ def baronaver2():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[2]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[2]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+    #네이버페이 클릭
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[4]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     while True:
         print('새창 전환')
@@ -322,11 +346,18 @@ def barokakao():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH,
-                        '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[3]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #카카오페이 클릭
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[5]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # driver.find_element(By.XPATH,
+    #                     '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[3]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     while True:
         print('새창 전환')
         last_tab = driver.window_handles[-1]
@@ -348,11 +379,17 @@ def baropayco1():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH,
-                        '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[4]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #페이코 클릭
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[2]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # driver.find_element(By.XPATH,
+    #                     '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[4]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     while True:
         print('새창 전환')
         last_tab = driver.window_handles[-1]
@@ -406,11 +443,17 @@ def baropayco2():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(
         money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
-    driver.find_element(By.XPATH,
-                        '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[4]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    #페이코 클릭
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[2]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # driver.find_element(By.XPATH,
+    #                     '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[4]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
     while True:
         print('새창 전환')
         last_tab = driver.window_handles[-1]
@@ -464,11 +507,18 @@ def barossg():
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').clear()
     driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[1]/ul/li[4]/div/input').send_keys(money)
 
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/div[2]/label/span').click()
+    # 쓱페이클릭
     driver.find_element(By.XPATH,
-                        '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[5]/label/img').click()
-    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+                        '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[1]/ul/li[3]/div/label/span').click()
+    #결제하기
+    driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[2]/button/span').click()
+    #결제확인
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
+
+    # driver.find_element(By.XPATH,
+    #                     '//*[@id="popupbaromall_payment"]/div/div[2]/div[2]/div[3]/ul/li[5]/label/img').click()
+    # driver.find_element(By.XPATH, '//*[@id="popupbaromall_payment"]/div/div[2]/div[3]/button/span').click()
+    # driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
 
     while True:
         print('새창 전환')

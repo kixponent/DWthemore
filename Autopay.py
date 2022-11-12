@@ -1,3 +1,4 @@
+import os
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -8,6 +9,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+import sys
+
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    print('running in a PyInstaller bundle')
+else:
+    print('running in a normal Python process')
 
 today = datetime.datetime.now().strftime("%Y%m%d")
 
@@ -230,7 +237,7 @@ def ph_pay(com, card, money):
     options = webdriver.ChromeOptions()
     # 창 숨기는 옵션 추가
     options.add_argument("headless")
-    driver = webdriver.Chrome("./chromedriver", options=options)
+    driver = webdriver.Chrome(chromedriver_path, options=options)
     driver.get('http://my.pharmpay.co.kr/')
     driver.find_element(By.ID, 'my_pur_taxno').send_keys('5290801603')
     driver.find_element(By.ID, 'my_pur_pw').send_keys('01603',Keys.RETURN)
@@ -321,7 +328,7 @@ def rp_pay(card,money):
     options = webdriver.ChromeOptions()
     # 창 숨기는 옵션 추가
     options.add_argument("headless")
-    driver = webdriver.Chrome("./chromedriver", options=options)
+    driver = webdriver.Chrome(chromedriver_path, options=options)
     # driver = webdriver.Chrome("./chromedriver")
     driver.get('http://bmpharm.co.kr/')
     for cookie in login_cookie:
