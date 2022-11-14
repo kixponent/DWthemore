@@ -82,7 +82,6 @@ def baro2():
     #결제확인 버튼
     driver.implicitly_wait(3)
     driver.find_element(By.XPATH, '/html/body/div[51]/div/div[3]/button[3]').click()
-
 #바로팜 일반 카드1
 def barocard1():
     last_tab = driver.window_handles[-1]

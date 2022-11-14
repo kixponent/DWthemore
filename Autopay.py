@@ -13,6 +13,7 @@ import sys
 
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
     chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe")
+
     print('running in a PyInstaller bundle')
 else:
     print('running in a normal Python process')
