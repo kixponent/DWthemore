@@ -1,5 +1,7 @@
 # from telnetlib import EC
 import os
+import time
+
 from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
@@ -27,6 +29,18 @@ def wait_for_new_window(driver, timeout=10):
     WebDriverWait(driver, timeout).until(
         lambda driver: len(handles_before) != len(driver.window_handles))
 
+def scroll_infinite():
+    scroll_to_bottom = "window.scrollTo(0, document.body.scrollHeight);"
+    get_window_height = "return document.body.scrollHeight"
+    last_height = driver.execute_script(get_window_height)
+    while True:
+    	driver.execute_script(scroll_to_bottom)
+        time.sleep(3)
+        new_height = driver.execute_script(get_window_height)
+        if new_height == last_height:
+        	break
+        last_height = new_height
+
 # while(not login_with_cookie):
 #     # 쿠키 정보를 이용해 로그인
 #     if find_cookie:
@@ -50,14 +64,18 @@ def wait_for_new_window(driver, timeout=10):
 
 def hmp_simpay1():
     #주문 경고창
-    last_tab = driver.window_handles[-1]
-    driver.switch_to.window(window_name=last_tab)
+    # last_tab = driver.window_handles[-1]
+    # driver.switch_to.window(window_name=last_tab)
     driver.find_element(By.XPATH, '//*[@id="purchaseM1button"]/button').click()
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="paymentAmountDd"]')))
     while True:
+        driver.implicitly_wait(3)
         print('새창 전환')
         try:
             money = int(driver.find_element(By.XPATH, '//*[@id="paymentAmountDd"]').text.replace(',', '')) - 5999
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="hMoneyUseAmount"]' )))
             driver.find_element(By.XPATH, '//*[@id="hMoneyUseAmount"]').send_keys(money)
             print('새창통과')
             break
@@ -79,7 +97,10 @@ def hmp_simpay2():
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
     driver.find_element(By.XPATH, '//*[@id="purchaseM1button"]/button').click()
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="paymentAmountDd"]')))
+    scroll_infinite()
     while True:
         print('새창 전환')
         try:
@@ -100,11 +121,15 @@ def hmp_simpay2():
     driver.find_element(By.XPATH, '//*[@id="imgPaymentPay"]').click()
     WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
+
 def hmp_card1():
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
     driver.find_element(By.XPATH, '//*[@id="purchaseM1button"]/button').click()
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="paymentAmountDd"]')))
+    scroll_infinite()
     while True:
         print('새창 전환')
         try:
@@ -172,7 +197,10 @@ def hmp_card2():
     last_tab = driver.window_handles[-1]
     driver.switch_to.window(window_name=last_tab)
     driver.find_element(By.XPATH, '//*[@id="purchaseM1button"]/button').click()
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
     driver.switch_to.alert.accept()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="paymentAmountDd"]')))
+    scroll_infinite()
     while True:
         print('새창 전환')
         try:

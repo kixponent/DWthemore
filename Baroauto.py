@@ -419,6 +419,8 @@ def baropayco1():
     #두번 가야 카드1
     driver.find_element(By.XPATH, '//*[@id="btnPayment"]').click()
     #비밀번호 타임
+
+
     while True:
         print('새창 완료 전환')
         last_tab = driver.window_handles[-1]

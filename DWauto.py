@@ -231,10 +231,14 @@ def themoreready():
             try:
                 driver.find_element(By.ID,"goOrderSubmit").click()
                 print('주문하기1 찾음')
+                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID,"totalOrderPrice")))
+                print('로딩확인')
                 break
             except:
                 driver.find_element(By.ID, "goOrder").click()
                 print('주문하기2 찾음')
+                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID,"totalOrderPrice")))
+                print('로딩확인')
                 break
         except:
             pass
@@ -242,10 +246,14 @@ def themoreready():
         try:
             totalmoney = int(driver.find_element(By.ID,"totalOrderPrice").get_property('value').replace(",",""))
             themoremoney = totalmoney-5999
+            print('예치금 사용 찾음')
+            driver.find_element(By.ID, "reserveAmt").clear()
             driver.find_element(By.ID,"reserveAmt").send_keys(themoremoney)
             driver.find_element(By.ID,"useReserveAmtBtn").click()
-            print('예치금 사용 찾음')
-            break
+            driver.implicitly_wait(3)
+            if int(driver.find_element(By.XPATH,'//*[@id="totalOrderPriceDiv1"]/span').text.replace(',','')) == themoremoney:
+                print('입력확인')
+                break
         except:
             pass
 
